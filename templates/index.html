@@ -1,0 +1,16 @@
+
+{% extends "layout.html" %}
+
+{% block content %}
+    <h1>hola Mundo en INDEX ;V</h1>
+
+    <h2>{{titulo}}</h2>
+    <ul>
+        {% for opera in listado %}
+            <li>{{opera}}</li>
+        {% endfor %}
+    </ul>
+    
+
+{% endblock %}
+  
