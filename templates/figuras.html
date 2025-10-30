@@ -1,0 +1,22 @@
+
+{% extends "layout.html" %}
+
+    {% block content %}
+    {% import "_macros.html" as macro %}
+        <h1>Figuras</h1>
+        <form class="form-control" action="" method="post" novalidate> 
+        {{ macro.campoNuevo(form.figura) }}
+        {{ macro.campoNuevo(form.valor1, placeholder='Numero 1') }}
+        {{ macro.campoNuevo(form.valor2, placeholder='Número 2 (opcional en el círculo)') }}
+        <br>
+        <button type="submit" class="btn btn-primary">Calcular </button>                   
+    </form>
+    
+    <hr> 
+        <h2>Resultado:</h2>
+        <div>
+            El área es: <strong>{{ resultado }}</strong>
+        </div>          
+
+   {% endblock %}
+   

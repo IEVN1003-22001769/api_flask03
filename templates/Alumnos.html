@@ -1,0 +1,21 @@
+
+{% extends "layout.html" %}
+
+    {% block content %}
+    {% import "_macros.html" as macro %}
+        <h1>Formulario de Alumnos</h1>
+        <form class="form-control" action="" method="post" novalidate>
+            {{macro.campoNuevo(form.matricula)}}
+            {{macro.campoNuevo(form.nombre)}}
+            {{macro.campoNuevo(form.apellido)}}
+            {{macro.campoNuevo(form.correo)}}
+            <button type="submit" class="btn btn-primary">Enviar</button>                   
+        </form>
+        <h2>Matricula: {{mat}}</h2>
+        <h2>Nombre: {{nom}}</h2>
+        <h2>Apellido: {{ape}}</h2>
+        <h2>Email: {{em}}</h2>
+        
+
+   {% endblock %}
+   
