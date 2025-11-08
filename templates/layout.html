@@ -1,56 +1,178 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="es">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="../static/bootstrap/css/bootstrap.min.css" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>ExamenPizzas</title>
+    
+    <!-- Estilos personalizados para imitar la imagen -->
     <style>
-      body {
-        padding-top: 60px;
-      }
+        body {
+            background-color: #DCEAF5;
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            margin: 0;
+            padding: 10px;
+        }
+        .main-container {
+            width: 980px;
+            margin: 10px auto;
+            border: 1px solid #99BBE2;
+            background-color: #DCEAF5;
+            padding: 10px;
+        }
+        .group-box {
+            border: 1px solid #99BBE2;
+            padding: 15px;
+            margin-bottom: 10px;
+            background-color: #DCEAF5;
+            overflow: hidden; /* Para contener floats */
+        }
+        
+        /* --- Estilos para inputs y botones --- */
+        input[type="text"],
+        input[type="number"] {
+            border: 1px solid #7F9DB9;
+            padding: 3px;
+            width: 180px;
+        }
+        input[type="number"] {
+            width: 80px;
+        }
+        
+        button, .btn {
+            background-color: #F0F0F0;
+            border: 1px solid #7F9DB9;
+            padding: 4px 12px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        button[disabled], .btn[disabled] {
+            background-color: #E0E0E0;
+            color: #999;
+            border-color: #BDBDBD;
+        }
 
-      .tr-head {
-        background: #50f010;
-      }
+        /* --- Estilos de layout --- */
+        .form-row {
+            margin-bottom: 10px;
+            overflow: hidden;
+        }
+        .form-item {
+            float: left;
+            margin-right: 20px;
+        }
+        .form-item label {
+            display: inline-block;
+            width: 70px;
+            text-align: right;
+            margin-right: 5px;
+        }
+
+        .col-left {
+            float: left;
+            width: 600px;
+        }
+        .col-right {
+            float: right;
+            width: 330px;
+        }
+        .clear {
+            clear: both;
+        }
+
+        /* --- Estilos específicos de la app --- */
+        .pizza-details {
+            overflow: hidden;
+        }
+        .pizza-details > div {
+            float: left;
+            margin-right: 30px;
+        }
+        .pizza-details label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+        }
+        .pizza-details input[type="radio"],
+        .pizza-details input[type="checkbox"] {
+            margin-right: 5px;
+        }
+        .pizza-details .num-pizzas {
+            margin-top: 18px; /* Alinear con 'Agregar' */
+        }
+        .pizza-details .num-pizzas label {
+            display: inline-block;
+            font-weight: normal;
+        }
+        .pizza-details .agregar-btn {
+            margin-top: 35px;
+        }
+
+        .pedido-tabla {
+            width: 100%;
+            height: 200px; /* Alto fijo para la tabla */
+            overflow-y: auto;
+            background-color: #FFFFFF;
+            border: 1px solid #7F9DB9;
+        }
+        .pedido-tabla table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .pedido-tabla th, 
+        .pedido-tabla td {
+            border: 1px solid #CCCCCC;
+            padding: 5px;
+            text-align: left;
+        }
+        .pedido-tabla th {
+            background-color: #F0F0F0;
+            position: sticky;
+            top: 0;
+        }
+        
+        .pedido-botones {
+            margin-top: 10px;
+        }
+        .pedido-botones button {
+            margin-right: 10px;
+        }
+
+        .ventas-box {
+            height: 240px;
+            padding: 10px;
+            border: 1px dotted #333;
+            background-color: #F0F0F0;
+            overflow-y: auto;
+        }
+        .ventas-box h3 {
+            margin-top: 0;
+            font-size: 18px;
+        }
+        .ventas-box p {
+            font-size: 16px;
+            margin: 10px 0;
+        }
+        .ventas-total-dia {
+            font-size: 18px;
+            font-weight: bold;
+            margin-top: 15px;
+        }
+        .btn-ventas {
+            width: 100%;
+            margin-top: 10px;
+        }
+
     </style>
-    <link
-      href="../static/bootstrap/css/bootstrap-responsive.min.css"
-      rel="stylesheet"
-    />
-    <title>Document</title>
   </head>
   <body>
-    <div class="navbar navbar navbar-inverse navbar-fixed-top">
-      <div class="navbar-inner">
-        <div class="container">
-          <a class="brand" href=""> IEVN-1003 </a>
 
-          <ul class="nav">
-            <li class="active">
-              <a href="">
-                <i class="icon-home icon-white"></i>
-                Inicio
-              </a>
-            </li>
-            <li>
-              <a href="">
-                <i class="icon-user icon-white"></i>
-                Usuarios
-              </a>
-            </li>
-            <li>
-              <a href="">
-                <i class="icon-user icon-white"></i>
-                Alumnos
-              </a>
-            </li>
-          </ul>
-        </div>
-      </div>
+    <div class="main-container">
+        <!-- Bloque de contenido principal -->
+        {% block content %}{% endblock %}
     </div>
 
-    {% block content %}
-    {% endblock %}
-    
+    <!-- JS de Bootstrap ELIMINADO -->
   </body>
 </html>

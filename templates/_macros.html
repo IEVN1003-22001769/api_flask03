@@ -21,3 +21,46 @@
     </dd>
 
 {% endmacro %}
+
+{% macro render_field(field) %}
+  <!-- Define el contenedor del campo -->
+  <div class="form-group mb-3">
+    <!-- Renderiza la etiqueta (label) -->
+    {{ field.label(class="form-label") }}
+    
+    <!-- Lógica para tipos de campo específicos -->
+    {% if field.type == 'RadioField' %}
+      <!-- Renderiza opciones de radio -->
+      {% for subfield in field %}
+        <div class="form-check">
+          {{ subfield(class="form-check-input") }}
+          {{ subfield.label(class="form-check-label") }}
+        </div>
+      {% endfor %}
+      
+    {% elif field.type == 'BooleanField' %}
+      <!-- Renderiza checkboxes -->
+      <div class="form-check">
+        {{ field(class="form-check-input") }}
+        {{ field.label(class="form-check-label") }}
+      </div>
+
+    {% elif field.type == 'DateField' %}
+      <!-- Fuerza el tipo 'date' para el input de fecha -->
+      {{ field(class="form-control", type="date") }}
+
+    {% else %}
+      <!-- Renderiza campos de texto estándar -->
+      {{ field(class="form-control") }}
+    {% endif %}
+    
+    <!-- Muestra errores de validación -->
+    {% if field.errors %}
+      <div class="invalid-feedback d-block">
+        {% for error in field.errors %}
+          <span>{{ error }}</span>
+        {% endfor %}
+      </div>
+    {% endif %}
+  </div>
+{% endmacro %}

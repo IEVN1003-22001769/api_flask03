@@ -1,0 +1,142 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="main-container">
+        
+        <form method="POST" action="{{ url_for('pizzeria') }}" novalidate>
+           
+            
+            <!-- Datos del Cliente -->
+            <div class="group-box">
+                <div class="form-row">
+                    <div class="form-item">
+                        
+                        <label for="nombre">Nombre:</label>
+                        <input id="nombre" name="nombre" type="text" value="{{ form.nombre.data or '' }}">
+                    </div>
+                    <div class="form-item">
+                        <label for="direccion">Dirección:</label>
+                        <input id="direccion" name="direccion" type="text" value="{{ form.direccion.data or '' }}">
+                    </div>
+                    <div class="form-item">
+                        <label for="telefono">Teléfono:</label>
+                        <input id="telefono" name="telefono" type="text" value="{{ form.telefono.data or '' }}">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Detalles dela pizza -->
+            <div class="group-box pizza-details">
+                <div>
+                    <label>Tamaño Pizza</label>
+                    {% for subfield in form.tamano %}
+                        <div>{{ subfield }} {{ subfield.label }}</div>
+                    {% endfor %}
+                    {% if form.tamano.errors %}
+                        <div style="color: red; font-size: 12px; margin-top: 5px;">
+                            {% for error in form.tamano.errors %} {{ error }} {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+                <div>
+                    <label>Ingredientes</label>
+                    <div>
+                        <input id="jamon" name="jamon" type="checkbox" value="y" {% if form.jamon.data %}checked{% endif %}>
+                        <label for="jamon">Jamón ($10)</label>
+                    </div>
+                    <div>
+                        <input id="pina" name="pina" type="checkbox" value="y" {% if form.pina.data %}checked{% endif %}>
+                        <label for="pina">Piña ($10)</label>
+                    </div>
+                    <div>
+                        <input id="champinones" name="champinones" type="checkbox" value="y" {% if form.champinones.data %}checked{% endif %}>
+                        <label for="champinones">Champiñones ($10)</label>
+                    </div>
+                </div>
+                <div class="num-pizzas">
+                    <label for="cantidad">Núm. de Pizzas:</label>
+                    <input id="cantidad" name="cantidad" type="number" value="{{ form.cantidad.data or 1 }}">
+                </div>
+                <div class="agregar-btn">
+                    <button type="submit" name="submit_button" value="Agregar">Agregar</button>
+                </div>
+            </div>
+
+            <!-- Pedido y Ventas -->
+            <div class="group-box">
+                <div class="col-left">
+                    <!-- Tabla de Pedido Actual -->
+                    <div class="pedido-tabla">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th style="width: 20%;">Tamaño</th>
+                                    <th style="width: 40%;">Ingredientes</th>
+                                    <th style="width: 10%;">Cant.</th>
+                                    <th style="width: 15%;">SubTotal</th>
+                                    <th style="width: 15%;">Acción</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% if not pedido %}
+                                <tr>
+                                    <td colspan="5" style="text-align: center; padding: 20px;">No hay pizzas en el pedido.</td>
+                                </tr>
+                                {% endif %}
+                                
+                                {% for item in pedido %}
+                                <tr>
+                                    <td>{{ item.tamano }}</td>
+                                    <td>{{ item.ingredientes }}</td>
+                                    <td>{{ item.cantidad }}</td>
+                                    <td>${{ "%.2f"|format(item.subtotal) }}</td>
+                                    <td>
+                                        <!-- Este es el link corregido -->
+                                        <a href="{{ url_for('pizzeria', accion='quitar', id=item.id) }}" style="color: red; text-decoration: none;">Quitar</a>
+                                    </td>
+                                </tr>
+                                {% endfor %} <!-- El loop termina aquí, dentro del tbody -->
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- Botones Quitar y Terminar -->
+                    <div class="pedido-botones">
+                        <button type="submit" name="submit_button" value="Terminar">Terminar</button>
+                        
+                        {% if total %}
+                        <span style="float: right; font-size: 18px; font-weight: bold; margin-top: 5px;">
+                            Total Pedido: ${{ "%.2f"|format(total) }}
+                        </span>
+                        {% endif %}
+                    </div>
+                </div>
+                
+                <div class="col-right">
+                    <!-- Ventas del Día -->
+                    <div class="ventas-box">
+                        <h3>Ventas del día</h3>
+                        {% if not ventas_clientes %}
+                            <p>No hay ventas registradas.</p>
+                        {% else %}
+                            {% for nombre, total in ventas_clientes.items() %}
+                            <p>
+                                <strong>{{ nombre }}</strong> total <strong>${{ "%.2f"|format(total) }}</strong>
+                            </p>
+                            {% endfor %}
+                        {% endif %}
+                        <hr>
+                        <p class="ventas-total-dia">
+                            Ventas totales del dia: <strong>${{ "%.2f"|format(gran_total) }}</strong>
+                        </p>
+                    </div>
+                    <button class="btn btn-ventas" disabled>Ventas totales por dia</button>
+                </div>
+                <div class="clear"></div>
+            </div>
+        </form>
+
+    </div>
+
+
+    </div>
+{% endblock %}
